@@ -1,0 +1,194 @@
+/* Reset default margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    background-image: url("robot.png");
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    flex-direction: column; /* Arrange title above chat box */
+}
+
+/* Chat container */
+#chat-container {
+    width: 100%;
+    height: 80%; /* Height adjusted for margins */
+    max-width: 600px; /* Maximum width to prevent chat from stretching too much */
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+    margin-top: 20px; /* Small margin from the top */
+    margin-bottom: 20px; /* Small margin from the bottom */
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Title styling */
+#chat-container h1 {
+    text-align: center;
+    font-size: 4rem; /* Increased font size for aesthetics */
+    color: #000000;
+    font-family: 'Lobster', cursive; /* Aesthetic font */
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    animation: titleAnimation 2s ease-out;
+}
+
+/* Title Animation */
+@keyframes titleAnimation {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(10px);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Messages container */
+#messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    list-style-type: none;
+    animation: fadeIn 1s ease-out;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    max-width: 80%;
+    animation: messageAnimation 1s ease-out;
+}
+
+.message.user {
+    background-color: #d4f1f4;
+    margin-left: auto;
+}
+
+.message.bot {
+    background-color: #f1f1f1;
+    margin-right: auto;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #888;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Form container */
+form {
+    display: flex;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    animation: fadeIn 1s ease-out;
+}
+
+form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+form button {
+    padding: 10px 15px;
+    background-color: #313831;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    animation: buttonAnimation 1s ease-out;
+}
+
+form button:hover {
+    background-color: #3a403a;
+}
+
+form input:focus,
+form button:focus {
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #4CAF50;
+}
+
+/* Typing indicator */
+#typingIndicator {
+    font-size: 1rem;
+    color: #888;
+    padding: 10px;
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Button animation */
+@keyframes buttonAnimation {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animation for messages */
+@keyframes messageAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation for fading in elements */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+

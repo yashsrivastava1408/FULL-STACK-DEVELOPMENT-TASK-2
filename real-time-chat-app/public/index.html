@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="chat-container">
+        <h1>CHAT BOT</h1> <!-- Title for the chat bot -->
+        <div id="messages"></div>
+        <form id="chatForm">
+            <input type="text" id="username" placeholder="Enter your username">
+            <input type="text" id="message" placeholder="Type a message">
+            <button type="submit">Send</button>
+        </form>
+        <div id="typingIndicator" style="display:none;">Bot is typing...</div>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const form = document.getElementById('chatForm');
+        const input = document.getElementById('message');
+        const messages = document.getElementById('messages');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const usernameInput = document.getElementById('username');
+
+        // Emit 'typing' event when user starts typing
+        input.addEventListener('input', () => {
+            socket.emit('typing', true);
+        });
+
+        // Emit 'chat message' when user submits a message
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = input.value;
+            if (message) {
+                const username = usernameInput.value || 'Anonymous';
+                socket.emit('chat message', { message, username });
+                addMessage(message, 'user', username); // Display the user's message
+                input.value = ''; // Clear the input after sending
+                socket.emit('typing', false); // Stop typing indicator
+            }
+        });
+
+        // Listen for the typing indicator
+        socket.on('typing', (isTyping) => {
+            typingIndicator.style.display = isTyping ? 'block' : 'none';
+        });
+
+        // Listen for chat messages from the server (including bot's response)
+        socket.on('chat message', (data) => {
+            addMessage(data.message, 'bot', data.username); // Display bot's message
+        });
+
+        // Add message to the chat
+        function addMessage(msg, type, username) {
+            const li = document.createElement('li');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', type);
+
+            const timestamp = new Date().toLocaleTimeString();
+            const messageContent = `<strong>${username}:</strong> ${msg} <span class="timestamp">${timestamp}</span>`;
+
+            messageDiv.innerHTML = messageContent;
+            li.appendChild(messageDiv);
+            messages.appendChild(li);
+            messages.scrollTop = messages.scrollHeight;
+        }
+    </script>
+</body>
+</html>
